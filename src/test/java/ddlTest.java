@@ -1,6 +1,4 @@
-import com.hotking.entity.Attachment;
-import com.hotking.entity.Note;
-import com.hotking.entity.Tag;
+import com.hotking.entity.*;
 import com.hotking.util.HibernateUtil;
 import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,57 +19,7 @@ public class ddlTest {
     @BeforeEach
     void init() throws IOException {
         sessionFactory = HibernateUtil.buildSessionFactory();
-        Tag tag1 = Tag.builder()
-                .name("test name")
-                .color(Tag.Color.PRIMARY)
-                .parent(null)
-                .children(null)
-                .build();
-        Tag tag2 = Tag.builder()
-                .name("test name")
-                .color(Tag.Color.PRIMARY)
-                .parent(tag1)
-                .children(null)
-                .build();
-        Tag tag3 = Tag.builder()
-                .name("test name")
-                .color(Tag.Color.PRIMARY)
-                .parent(tag1)
-                .children(null)
-                .build();
-
-        Note note = Note.builder()
-                .author("test author")
-                .title("test title")
-                .content("test content")
-                .url("test url")
-                .tags(List.of(tag2, tag1))
-                .build();
-
-        Path path = Paths.get("C:\\images\\Isaak.jpg");
-
-        byte[] image = Files.readAllBytes(path);
-
-
-        var attachment = Attachment.builder()
-                .content(image)
-                .contentType(Attachment.ContentType.JPG)
-                .note(note)
-                .build();
-
-        try(var session = sessionFactory.openSession()){
-            session.beginTransaction();
-
-            session.save(tag1);
-            session.save(tag2);
-            session.save(tag3);
-
-            session.save(note);
-
-            session.save(attachment);
-
-            session.getTransaction().commit();
-        }
+        TestDataImporter.importData(sessionFactory);
     }
 
     @Test
@@ -83,6 +31,9 @@ public class ddlTest {
             var criteria = cb.createQuery(Tag.class);
             var tag = criteria.from(Tag.class);
             criteria.select(tag);
+
+            ArticleNote articleNote = session.find(ArticleNote.class, 2);
+            articleNote.setContent("test new article note content for version change");
 
             List<Tag> tags = session.createQuery(criteria).list();
             assertThat(tags).hasSizeGreaterThanOrEqualTo(3);

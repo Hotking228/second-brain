@@ -1,5 +1,14 @@
 plugins {
     id 'java'
+    id("com.ewerk.gradle.plugins.querydsl") version "1.0.10"
+}
+
+sourceSets {
+    main {
+        java{
+            srcDirs += "build/generated/sources/annotationProcessor/java/main"
+        }
+    }
 }
 
 group = 'com.hotking'
@@ -40,6 +49,21 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
+
+querydsl {
+    jpa = true
+    querydslSourcesDir = "build/generated/sources/annotationProcessor/java/main"
+}
+
+compileQuerydsl {
+    options.annotationProcessorPath = configurations.querydsl
+}
+
+configurations {
+    querydsl.extendsFrom implementation, runtimeOnly, compileOnly
+}
+
+//compileQuerydsl.dependsOn(classes)
 
 test {
     useJUnitPlatform()

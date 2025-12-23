@@ -1,0 +1,36 @@
+package com.hotking.entity;
+
+import lombok.*;
+import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.OptimisticLockType;
+import org.hibernate.annotations.OptimisticLocking;
+
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+
+@SuperBuilder
+@Data
+@EqualsAndHashCode(callSuper = false)
+@OptimisticLocking(type = OptimisticLockType.VERSION)
+@Entity
+@NoArgsConstructor
+@AllArgsConstructor
+public class QuoteNote extends Note{
+
+    private String url;
+
+    @Enumerated(EnumType.STRING)
+    @Builder.Default
+    private SourceType sourceType = SourceType.OTHER;
+
+    private String sourceName;
+
+    private String authorName;
+
+    public enum SourceType{
+        BOOK,
+        WEB,
+        OTHER
+    }
+}
