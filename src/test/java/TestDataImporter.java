@@ -55,6 +55,7 @@ public class TestDataImporter {
                 .sourceName("test quote note source name")
                 .authorName("test quote note author name")
                 .url("test quote note url")
+                .title("test quote note title")
                 .tags(List.of(tag3, tag2))
                 .build();
 

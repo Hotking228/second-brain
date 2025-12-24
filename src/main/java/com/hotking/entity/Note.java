@@ -24,7 +24,7 @@ import java.util.List;
 @Audited
 @SuperBuilder
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Note extends AuditableEntity {
+public class Note extends AuditableEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

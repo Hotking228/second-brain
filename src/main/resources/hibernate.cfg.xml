@@ -11,7 +11,7 @@
       <property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property>
       <property name="show_sql">true</property>
       <property name="format_sql">true</property>
-      <property name="hibernate.hbm2ddl.auto">create</property>
+      <property name="hibernate.hbm2ddl.auto">validate</property>
       <property name="hibernate.hbm2ddl.halt_on_error">false</property>
       <property name="hibernate.cache.use_second_level_cache">true</property>
       <property name="hibernate.cache.region.factory_region">org.hibernate.cache.jcache.internal.JCacheRegionFactory</property>

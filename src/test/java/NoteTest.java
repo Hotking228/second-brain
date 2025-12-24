@@ -7,10 +7,7 @@ import com.hotking.util.HibernateUtil;
 import lombok.Cleanup;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.io.IOException;
 import java.time.Instant;
@@ -23,20 +20,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class NoteTest {
 
-    static SessionFactory sessionFactory;
+    private SessionFactory sessionFactory;
 
-    @BeforeAll
-    public static void initSessionFactory(){
-        sessionFactory = HibernateUtil.buildSessionFactory();
-    }
 
     @BeforeEach
     public void init() throws IOException {
+        sessionFactory = HibernateUtil.buildSessionFactory();
         TestDataImporter.importData(sessionFactory);
     }
 
-    @AfterAll
-    public static void close(){
+    @AfterEach
+    public void close(){
         sessionFactory.close();
     }
 
