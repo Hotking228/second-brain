@@ -1,6 +1,8 @@
 package com.hotking.util;
 
+import com.hotking.entity.Note;
 import org.hibernate.SessionFactory;
+import org.hibernate.annotations.FetchProfile;
 import org.hibernate.cfg.Configuration;
 
 

@@ -5,9 +5,7 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.OptimisticLockType;
 import org.hibernate.annotations.OptimisticLocking;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.*;
 
 @SuperBuilder
 @Data
@@ -16,6 +14,7 @@ import javax.persistence.Enumerated;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@DiscriminatorValue("quotenote")
 public class QuoteNote extends Note{
 
     private String url;

@@ -28,6 +28,9 @@
 <!--                                 4 - Non repeatable read-->
 <!--                                 8 - Phantom read-->
       <mapping class="com.hotking.entity.Note"/>
+      <mapping class="com.hotking.entity.PersonalNote"/>
+      <mapping class="com.hotking.entity.ArticleNote"/>
+      <mapping class="com.hotking.entity.QuoteNote"/>
       <mapping class="com.hotking.entity.Tag"/>
       <mapping class="com.hotking.entity.Attachment"/>
   </session-factory>

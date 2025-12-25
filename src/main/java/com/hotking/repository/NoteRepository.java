@@ -17,10 +17,6 @@ public class NoteRepository<E extends Note> extends RepositoryBase<E, Integer>{
     public List<E> findByTag(List<Tag> tags){
         var session = sessionFactory.getCurrentSession();
 
-        StringBuilder sb = new StringBuilder();
-        for (Tag tag : tags) {
-            sb.append(tag.getId());
-        }
         String hql = """
                 select n
                 from Note n
