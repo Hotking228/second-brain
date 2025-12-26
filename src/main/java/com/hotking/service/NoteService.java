@@ -8,20 +8,23 @@ import com.hotking.entity.QuoteNote;
 import com.hotking.repository.NoteRepository;
 import com.hotking.util.HibernateUtil;
 import org.hibernate.SessionFactory;
+import org.hibernate.graph.GraphSemantic;
 
 import javax.swing.text.html.Option;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class NoteService {
-    public static List<ShowAllNotesDto> getAllNotes() {
+    public static List<Note> getAllNotes() {
         SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
         var session = sessionFactory.getCurrentSession();
         session.beginTransaction();
-
-        List<ShowAllNotesDto> list = new NoteRepository<Note>(sessionFactory, Note.class).findAll().stream()
-                .map(note -> new ShowAllNotesDto(note.getId(), note.getTitle(), note.getCreatedAt()))
-                .toList();
+        Map<String, Object> properties = Map.of(
+                GraphSemantic.LOAD.getJpaHintName(),
+                sessionFactory.getCurrentSession().getEntityGraph("withTags")
+        );
+        List<Note> list = new NoteRepository<Note>(sessionFactory, Note.class).findAll(properties);
         session.getTransaction().commit();
         return list;
 

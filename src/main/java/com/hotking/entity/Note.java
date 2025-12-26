@@ -23,6 +23,10 @@ import java.util.List;
 @Audited
 @SuperBuilder
 @Inheritance(strategy = InheritanceType.JOINED)
+@NamedEntityGraph(name = "withTags",
+attributeNodes = {@NamedAttributeNode("tags")
+})
+
 public class Note extends AuditableEntity {
 
     @Id

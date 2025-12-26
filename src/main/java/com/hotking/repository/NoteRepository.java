@@ -3,9 +3,12 @@ package com.hotking.repository;
 import com.hotking.entity.*;
 import com.querydsl.jpa.impl.JPAQuery;
 import org.hibernate.SessionFactory;
+import org.hibernate.graph.GraphSemantic;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 public class NoteRepository<E extends Note> extends RepositoryBase<E, Integer>{

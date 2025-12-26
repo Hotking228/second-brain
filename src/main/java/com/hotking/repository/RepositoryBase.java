@@ -3,9 +3,13 @@ package com.hotking.repository;
 import com.querydsl.jpa.impl.JPAQuery;
 import lombok.*;
 import org.hibernate.SessionFactory;
+import org.hibernate.graph.GraphSemantic;
 
+import javax.persistence.EntityGraph;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 @AllArgsConstructor
@@ -16,13 +20,22 @@ public class RepositoryBase<E, K extends Serializable> implements Repository<E, 
     protected SessionFactory sessionFactory;
 
     @Override
-    public List<E> findAll() {
+    public List<E> findAll(Map<String, Object> properties) {
         var session = sessionFactory.getCurrentSession();
         var cb = session.getCriteriaBuilder();
         var criteria = cb.createQuery(clazz);
-        criteria.from(clazz);
-        return session.createQuery(criteria)
-                .list();
+        var root = criteria.from(clazz);
+
+        // Создаём query
+        var query = session.createQuery(criteria);
+
+        // Если есть EntityGraph в properties - применяем как hint
+        if (properties != null && properties.containsKey(GraphSemantic.LOAD.getJpaHintName())) {
+            EntityGraph<?> entityGraph = (EntityGraph<?>) properties.get(GraphSemantic.LOAD.getJpaHintName());
+            query.setHint(GraphSemantic.LOAD.getJpaHintName(), entityGraph);
+        }
+
+        return query.getResultList();
     }
 
     @Override
