@@ -186,6 +186,9 @@
 <%--                    <span class="tag-count">${tag.notesCount}</span>--%>
                 </a>
             </c:forEach>
+            <div class="tag-item">
+                <a href="/createTag" class="link-text">+</a>
+            </div>
         </div>
     </div>
 
