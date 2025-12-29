@@ -5,6 +5,11 @@
     <head>
         <title>Notes:</title>
         <style>
+
+           body{
+               background-color: #f8f9fa;
+               font-family: sans-serif;
+           }
             .tag-cloud{
                 margin-top: 40px;
                 padding: 20px;
@@ -66,7 +71,7 @@
             }
 
             .note-card{
-                border:1px solid #e0e0e0;
+                border: 1px solid #e0e0e0;
                 border-radius: 8px;
                 padding: 15px;
                 margin-bottom: 15px;
@@ -98,6 +103,21 @@
                 background-color: #ecf0f1;
                 border-radius: 12px;
                 font-size: 12px;
+
+            }
+
+            .create-button{
+                width: fit-content;
+                height: fit-content;
+                /*margin-top: 20px;*/
+                font-size: 24px;
+                text-align: center;
+                display: flex;
+            }
+
+            .link-text{
+                color: #333333;
+                text-decoration: none;
             }
         </style>
     </head>
@@ -105,10 +125,15 @@
     <body>
         <div class="notes-container">
             <h1>Notes</h1>
+            <div class="create-button">
+                <div class="note-card">
+                    <a href="/createNote" class="link-text">+</a>
+                </div>
+            </div>
             <c:forEach var="note" items="${requestScope.notes}">
                 <div class="note-card">
                     <div class="note-title">
-                        <a href="/note?noteId=${note.id}">${note.title}</a>
+                        <a href="/note?noteId=${note.id}" class="link-text">${note.title}</a>
                     </div>
 
                     <div class="note-meta">
