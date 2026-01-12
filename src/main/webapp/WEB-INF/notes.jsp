@@ -70,7 +70,7 @@
                 margin-bottom: 30px;
             }
 
-            .note-card{
+            .card{
                 border: 1px solid #e0e0e0;
                 border-radius: 8px;
                 padding: 15px;
@@ -98,6 +98,14 @@
                 margin-top: 10px;
             }
 
+           .note-card{
+               border: 1px solid #e0e0e0;
+               border-radius: 8px;
+               padding: 20px;
+               margin-bottom: 20px;
+               background-color: #fff;
+           }
+
             .note-tag{
                 padding: 3px 8px;
                 background-color: #ecf0f1;
@@ -119,6 +127,39 @@
                 color: #333333;
                 text-decoration: none;
             }
+
+           .tag-option{
+               display: flex;
+               align-items: center;
+               padding: 6px 12px;
+               background-color: #f0f0f0;
+               border-radius: 20px;
+               border: 1px solid #ddd;
+               cursor: pointer;
+               transition: all 0.2s;
+           }
+
+           .tag-checkbox {
+               display: none; /* Скрываем стандартный чекбокс */
+           }
+
+
+           .tag-checkbox:checked + .tag-color-dot {
+               outline: 2px solid #3498db;
+               outline-offset: 2px;
+           }
+
+           .tag-checkbox:checked + .tag-color-dot + .tag-name {
+               font-weight: bold;
+               color: #3498db;
+           }
+
+           .search-button{
+               border-radius: 20px;
+               width: 100px;
+               height: 60px;
+               font-size: 20px;
+           }
         </style>
     </head>
 
@@ -175,22 +216,24 @@
                 </div>
             </c:forEach>
         </div>
-    <div class="tag-cloud">
-        <h3>Tags: (${fn:length(allTags)})</h3>
-        <div class="tag-container">
-            <c:forEach var="tag" items="${allTags}">
-                <a href="/notes?tagId=${tag.id}" class="tag-item"
-                   title="${tag.description}">
-                    <span class="tag-color-dot" style="background-color: ${tag.color.hex}"></span>
-                    <span class="tag-name">${tag.name}</span>
-<%--                    <span class="tag-count">${tag.notesCount}</span>--%>
-                </a>
-            </c:forEach>
-            <div class="tag-item">
-                <a href="/createTag" class="link-text">+</a>
+        <form action="/notes" method="get">
+            <div class="tag-cloud">
+                <button type="submit" class="search-button">Search</button>
+                <br>
+                <h3>Tags: (${fn:length(allTags)})</h3>
+                <div class="tag-container">
+                    <c:forEach var="tag" items="${allTags}">
+                        <label for="tag${tag.id}" class="tag-option">
+                            <input type="checkbox" name="tags" value="${tag.id}" class="tag-checkbox" id="tag${tag.id}">
+                            <span class="tag-color-dot" style="background-color: ${tag.color.hex}"></span>
+                            <span class="tag-name">${tag.name}</span>
+                        </label>
+                    </c:forEach>
+                    <div class="tag-item">
+                        <a href="/createTag" class="link-text">+</a>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-
+        </form>
     </body>
 </html>

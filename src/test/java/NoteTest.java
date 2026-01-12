@@ -41,7 +41,7 @@ public class NoteTest {
         NoteRepository<Note> noteRepository = new NoteRepository<>(sessionFactory, Note.class);
         TagRepository tagRepository = new TagRepository(sessionFactory);
         List<Tag> tags = List.of(tagRepository.findById(1).get(), tagRepository.findById(2).get());
-        List<Note> notes = noteRepository.findByTag(tags);
+        List<Note> notes = noteRepository.findByTag(tags, null);
         assertThat(notes).hasSize(1);
         System.out.println(notes);
         session.getTransaction().commit();

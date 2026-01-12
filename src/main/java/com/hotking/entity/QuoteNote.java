@@ -28,6 +28,7 @@ public class QuoteNote extends Note{
     private String authorName;
 
     public enum SourceType{
+        NONE,
         BOOK,
         WEB,
         OTHER

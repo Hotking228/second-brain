@@ -16,4 +16,21 @@ public class TagService {
         session.getTransaction().commit();
         return  tags;
     }
+
+    public static Tag getByName(String name) {
+        var sessionFactory = HibernateUtil.buildSessionFactory();
+        var session = sessionFactory.getCurrentSession();
+        session.beginTransaction();
+        Tag tag = new TagRepository(sessionFactory).getByName(name).get();
+        session.getTransaction().commit();
+        return tag;
+    }
+
+    public static void save(Tag tag) {
+        var sessionFactory = HibernateUtil.buildSessionFactory();
+        var session = sessionFactory.getCurrentSession();
+        session.beginTransaction();
+        new TagRepository(sessionFactory).save(tag);
+        session.getTransaction().commit();
+    }
 }

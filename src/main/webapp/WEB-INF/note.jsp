@@ -89,6 +89,16 @@
         .back-link:hover {
             text-decoration: underline;
         }
+
+        .delete-button{
+            width: fit-content;
+            height: fit-content;
+            /*margin-top: 20px;*/
+            font-size: 12px;
+            text-align: center;
+            display: flex;
+            border-radius: 20px;
+        }
     </style>
 </head>
 
@@ -144,6 +154,10 @@
         </div>
     </c:if>
 
+    <form action="/deleteNote" method="get">
+        <input type="hidden" name="noteId" value="${requestScope.note.id}">
+        <button type="submit" class="delete-button">Delete note</button>
+    </form>
 </div>
 
 <!-- Простая ссылка назад -->

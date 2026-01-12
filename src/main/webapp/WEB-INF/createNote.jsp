@@ -37,7 +37,7 @@
                 border-bottom: 2px solid #3498db;
             }
 
-            .content-textarea{
+            .content-text{
                 width: 100%;
                 min-height: 200px;
                 border:none;
@@ -53,12 +53,34 @@
                 overflow-y: auto;
             }
 
-            .content-textarea:focus{
+            .content-text:focus{
                 border-left: 3px solid #3498db;
                 padding-left: 5px;
             }
 
-            .content-textarea::placeholder{
+            .content-text::placeholder{
+                color: #aaa;
+                font-style: italic;
+            }
+
+            .default-text{
+                width: 100%;
+                border:none;
+                outline: none;
+                background: transparent;
+
+                font-size: 16px;
+                color: #333;
+
+                padding: 10px;
+            }
+
+            .default-text:focus{
+                border-left: 3px solid #3498db;
+                padding-left: 5px;
+            }
+
+            .default-text::placeholder{
                 color: #aaa;
                 font-style: italic;
             }
@@ -142,6 +164,11 @@
                 outline: 2px solid #3498db;
                 outline-offset: 2px;
             }
+
+            .select-source-type{
+                border-radius: 20px;
+            }
+
         </style>
     </head>
 
@@ -152,9 +179,28 @@
                     <input type="text" name="title" id="titleId" class="title-input" placeholder="Title...">
                 </label>
 
-
                 <label for="contentId">
-                    <textarea name="content" id="contentId" placeholder="Note text..." class="content-textarea"></textarea>
+                    <textarea name="content" id="contentId" placeholder="Note text..." class="content-text"></textarea>
+                </label>
+
+                <label for="urlId">
+                    <input type="text" name="url" id="urlId" class="default-text" placeholder="URL...">
+                </label>
+
+                <label for="authorId">
+                    <input type="text" name="author" id="authorId" class="default-text" placeholder="Author...">
+                </label>
+
+                <label for="sourceNameId">
+                    <input type="text" name="sourceName" id="sourceNameId" class="default-text" placeholder="Source name...">
+                </label>
+
+                <label for="sourceTypeId">
+                    <select name="sourceType" id="sourceTypeId" class="select-source-type">
+                        <c:forEach items="${requestScope.sourceTypes}" var="sourceType">
+                            <option value="${sourceType}">${sourceType}</option>
+                        </c:forEach>
+                    </select>
                 </label>
 
                 <div class="tag-section">

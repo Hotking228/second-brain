@@ -5,6 +5,7 @@ import com.querydsl.jpa.impl.JPAQuery;
 import org.hibernate.SessionFactory;
 import org.hibernate.graph.GraphSemantic;
 
+import javax.persistence.EntityGraph;
 import java.time.Instant;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +18,7 @@ public class NoteRepository<E extends Note> extends RepositoryBase<E, Integer>{
         super(clazz, sessionFactory);
     }
 
-    public List<E> findByTag(List<Tag> tags){
+    public List<E> findByTag(List<Tag> tags, Map<String, Object> properties){
         var session = sessionFactory.getCurrentSession();
 
         String hql = """
@@ -30,10 +31,16 @@ public class NoteRepository<E extends Note> extends RepositoryBase<E, Integer>{
                 ) >= :tagsCount
                 """;
 
-        return session.createQuery(hql, clazz)
+        var query = session.createQuery(hql, clazz)
                 .setParameter("tagsId", tags.stream().map(Tag::getId).toList())
-                .setParameter("tagsCount", (long) tags.size())
-                .list();
+                .setParameter("tagsCount", (long) tags.size());
+
+        if (properties != null && properties.containsKey(GraphSemantic.LOAD.getJpaHintName())) {
+            EntityGraph<?> entityGraph = (EntityGraph<?>) properties.get(GraphSemantic.LOAD.getJpaHintName());
+            query.setHint(GraphSemantic.LOAD.getJpaHintName(), entityGraph);
+        }
+
+        return query.list();
     }
 
     public List<E> findByTitleOrContent(String title, String content) {

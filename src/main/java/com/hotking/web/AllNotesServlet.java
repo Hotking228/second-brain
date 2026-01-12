@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 @WebServlet("/notes")
@@ -20,10 +21,24 @@ public class AllNotesServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Note> notes = NoteService.getAllNotes();
+        List<Note> notes;
+        if(req.getParameter("tags") == null) {
+            notes = NoteService.getAllNotes();
+        } else {
+            List<String> tagsId = Arrays.stream(req.getParameterValues("tags")).toList();
+            notes = NoteService.getNotesByTags(tagsId);
+            System.out.println("===========================================================");
+            System.out.println(notes);
+            System.out.println(notes.size());
+            System.out.println("===========================================================");
+        }
+
+
         List<Tag> tags = TagService.getAllTags();
         req.setAttribute("allTags", tags);
         req.setAttribute("notes", notes);
+
+
         req.getRequestDispatcher(JspUtil.getPath("notes"))
                 .forward(req, resp);
     }
