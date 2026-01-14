@@ -4,7 +4,7 @@
 <img width="1707" height="760" alt="image" src="https://github.com/user-attachments/assets/878bd42b-c1ae-41ff-8bcd-33dbeb1a04b0" />
 # Основные инструменты
 Основными инструментами, используемыми в процессе разработки являются:
-- Gradle + Groovy для реализации жизненного цикла приложения
+- Gradle + Groovy для управления жизненным циклом проекта
 - Apache Tomcat для деплоя приложения
 - Lombok для удобных реализаций стандартных методов и полей
 - JUnit 5 для TDD
